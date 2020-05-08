@@ -1,14 +1,11 @@
-﻿using System;
-using System.ComponentModel;
-using System.Globalization;
-using System.Windows.Controls;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using WindowSettings.Common.Command;
+using WindowSettings.Common.Event;
 using WindowSettings.Validation;
 
 namespace WindowSettings.App.ViewModels
 {
-    public class MainViewModel : ValidationRule, INotifyPropertyChanged
+    public class MainViewModel : ObservableEvent
     {
         private string _name;
         private string _digits;
@@ -16,7 +13,6 @@ namespace WindowSettings.App.ViewModels
         private string _minimum;
         private string _start;
         private string _end;
-        private string _errorMessage;
         private bool _isDecimalValue;
         private string _myCommandValue;
         public ICommand MyCommand { get; set; }
@@ -24,7 +20,7 @@ namespace WindowSettings.App.ViewModels
         public string Name
         {
             get { return _name; }
-            set { _name = value; OnPropertyRaised("Name"); }
+            set { _name = value; OnPropertyChanged("Name"); }
         }
 
         public string Digits
@@ -34,14 +30,14 @@ namespace WindowSettings.App.ViewModels
             {
                 _digits = value;
                 (Maximum, Minimum, Start) = WindowSettingsValidator.ValidateWindowDigits(value, _maximum, _minimum, _start);
-                OnPropertyRaised("Digits");
+                OnPropertyChanged("Digits");
             }
         }
 
         public string Maximum
         {
             get { return _maximum; }
-            set { _maximum = value; OnPropertyRaised("Maximum"); OnPropertyRaised("End"); }
+            set { _maximum = value; OnPropertyChanged("Maximum"); OnPropertyChanged("End"); }
         }
 
         public string Minimum
@@ -50,7 +46,7 @@ namespace WindowSettings.App.ViewModels
             set
             {
                 _minimum = value;
-                OnPropertyRaised("Minimum");
+                OnPropertyChanged("Minimum");
             }
         }
 
@@ -60,20 +56,14 @@ namespace WindowSettings.App.ViewModels
             set
             {
                 _start = WindowSettingsValidator.ValidateWindowValue(value, _digits);
-                OnPropertyRaised("Start");
+                OnPropertyChanged("Start");
             }
         }
 
         public string End
         {
             get { return _end; }
-            set { _end = value; OnPropertyRaised("End"); }
-        }
-
-        public string ErrorMessage
-        {
-            get { return _errorMessage; }
-            set { _errorMessage = value; }
+            set { _end = value; OnPropertyChanged("End"); }
         }
 
         public bool IsDecimalValue
@@ -83,7 +73,7 @@ namespace WindowSettings.App.ViewModels
                 bool selected = _isDecimalValue ? true : false;
                 return selected;
             }
-            set { OnPropertyRaised("IsDecimalValue"); }
+            set { OnPropertyChanged("IsDecimalValue"); }
         }
 
         public string MyCommandValue
@@ -98,7 +88,7 @@ namespace WindowSettings.App.ViewModels
                     else _isDecimalValue = true;
                     Name = "Z";
                 }
-                OnPropertyRaised("MyCommandValue");
+                OnPropertyChanged("MyCommandValue");
             }
 
         }
@@ -114,13 +104,6 @@ namespace WindowSettings.App.ViewModels
             _isDecimalValue = isDecimalValue;
             _myCommandValue = myCommandValue;
             MyCommand = new RelayCommand(ExecuteMethod, CanExecuteMethod);
-        }
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyRaised(string info)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(info));
         }
 
         private bool CanExecuteMethod(object parameter)
@@ -140,18 +123,8 @@ namespace WindowSettings.App.ViewModels
             MyCommandValue = (string)parameter;
             if (MyCommandValue == "Z") _isDecimalValue = false;
             else _isDecimalValue = true;
-            OnPropertyRaised("IsDecimalValue");
+            OnPropertyChanged("IsDecimalValue");
         }
 
-        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
-        {
-            ValidationResult result = new ValidationResult(true, null);
-            string inputString = (value ?? string.Empty).ToString();
-            if (string.IsNullOrEmpty(inputString))
-                return result;
-            if (Convert.ToDecimal(inputString) < Convert.ToDecimal(Minimum) || Convert.ToDecimal(inputString) > Convert.ToDecimal(Maximum))
-                result = new ValidationResult(false, this.ErrorMessage);
-            return result;
-        }
     }
 }
