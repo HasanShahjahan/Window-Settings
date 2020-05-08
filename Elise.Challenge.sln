@@ -11,9 +11,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{E961DF47
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowSettings.App", "src\WindowSettings.App\WindowSettings.App.csproj", "{BF154E8C-6D5C-493B-854A-1300B3832160}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowSettings.Validation", "src\WindowSettings.Validation\WindowSettings.Validation.csproj", "{C1C09FC2-23C1-464A-8094-85E5DBFA32F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowSettings.Validation", "src\WindowSettings.Validation\WindowSettings.Validation.csproj", "{C1C09FC2-23C1-464A-8094-85E5DBFA32F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowSettings.Common", "src\WindowSettings.Common\WindowSettings.Common.csproj", "{782708BA-A64A-4E3F-ACAD-C35AC2C1F0D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowSettings.Common", "src\WindowSettings.Common\WindowSettings.Common.csproj", "{782708BA-A64A-4E3F-ACAD-C35AC2C1F0D5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowSettings.Business", "src\WindowSettings.Business\WindowSettings.Business.csproj", "{A9633E56-098A-4E37-AEDF-DF0D8B580190}"
 EndProject

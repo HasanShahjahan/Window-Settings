@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:WindowSettings.App"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d" Height="576" Width="1024" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" Background="#F5F5F5">
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -39,13 +40,13 @@
             <materialDesign:DialogHost.DialogContent>
                 <Grid Width="500" Height="400" HorizontalAlignment="Center">
                     <StackPanel Orientation="Vertical" Margin="30">
-                        <TextBox materialDesign:HintAssist.Hint="Custom names..." Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" Width="200" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger = PropertyChanged}"/>
+                        <TextBox materialDesign:HintAssist.Hint="Custom names..." Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" Width="200" Text="{Binding Name, ValidatesOnDataErrors=True, UpdateSourceTrigger = PropertyChanged}" ToolTip="{Binding ErrorCollection[Name]}"/>
                         <RadioButton Width="150" Content="Z" Command="{Binding Path=MyCommand}" Name="Integer" CommandParameter="{Binding ElementName=Integer, Path=Content}" Margin="10"></RadioButton>
                         <RadioButton Width="150" Content="Q" Command="{Binding Path=MyCommand}" Name="Decimal" CommandParameter="{Binding ElementName=Decimal, Path=Content}" IsChecked="True"></RadioButton>
-                        <TextBox materialDesign:HintAssist.Hint="Digits" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" Width="200" Margin="10" Text="{Binding Digits, UpdateSourceTrigger = PropertyChanged}" IsEnabled="{Binding IsDecimalValue}"/>
-                        <TextBox materialDesign:HintAssist.Hint="Minimum" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" Width="200" Margin="10" Text="{Binding Minimum, UpdateSourceTrigger = PropertyChanged}"/>
-                        <TextBox materialDesign:HintAssist.Hint="Value" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" Width="200" Margin="10" Text="{Binding Start, UpdateSourceTrigger = PropertyChanged}"/>
-                        <TextBox materialDesign:HintAssist.Hint="Maximum" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" Width="200" Text="{Binding Maximum, UpdateSourceTrigger = PropertyChanged}"/>
+                        <TextBox materialDesign:HintAssist.Hint="Digits" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" Width="200" Margin="10" Text="{Binding Digits, ValidatesOnDataErrors=True, UpdateSourceTrigger = PropertyChanged}" IsEnabled="{Binding IsDecimalValue}" ToolTip="{Binding ErrorCollection[Digits]}"/>
+                        <TextBox materialDesign:HintAssist.Hint="Minimum" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" Width="200" Margin="10" Text="{Binding Minimum, ValidatesOnDataErrors=True, UpdateSourceTrigger = PropertyChanged}" ToolTip="{Binding ErrorCollection[Minimum]}"/>
+                        <TextBox materialDesign:HintAssist.Hint="Value" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" Width="200" Margin="10" Text="{Binding Start, ValidatesOnDataErrors=True, UpdateSourceTrigger = PropertyChanged}" ToolTip="{Binding ErrorCollection[Start]}"/>
+                        <TextBox materialDesign:HintAssist.Hint="Maximum" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" Width="200" Text="{Binding Maximum, ValidatesOnDataErrors=True, UpdateSourceTrigger = PropertyChanged}" ToolTip="{Binding ErrorCollection[Maximum]}"/>
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="15">

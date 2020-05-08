@@ -1,21 +1,35 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows.Input;
 using WindowSettings.Common.Command;
 using WindowSettings.Common.Event;
 using WindowSettings.Validation;
 
 namespace WindowSettings.App.ViewModels
 {
-    public class MainViewModel : ObservableEvent
+    public class MainViewModel : ObservableEvent, IDataErrorInfo
     {
         private string _name;
+
         private string _digits;
+
         private string _maximum;
+
         private string _minimum;
+
         private string _start;
+
         private string _end;
+
         private bool _isDecimalValue;
+
         private string _myCommandValue;
         public ICommand MyCommand { get; set; }
+        public string Error { get { return null; } }
+
+        public Dictionary<string, string> ErrorCollection { get; private set; } = new Dictionary<string, string>();
 
         public string Name
         {
@@ -29,7 +43,7 @@ namespace WindowSettings.App.ViewModels
             set
             {
                 _digits = value;
-                (Maximum, Minimum, Start) = WindowSettingsValidator.ValidateWindowDigits(value, _maximum, _minimum, _start);
+                //(Maximum, Minimum, Start) = WindowSettingsValidator.ValidateWindowDigits(value, _maximum, _minimum, _start);
                 OnPropertyChanged("Digits");
             }
         }
@@ -126,5 +140,16 @@ namespace WindowSettings.App.ViewModels
             OnPropertyChanged("IsDecimalValue");
         }
 
+        public string this[string name]
+        {
+            get
+            {
+                string result = WindowSettingsValidator.ValidateInput(name, Name, Minimum, Maximum, Digits, Start, IsDecimalValue);
+                if (ErrorCollection.ContainsKey(name)) ErrorCollection[name] = result;
+                else if (result != null) ErrorCollection.Add(name, result);
+                OnPropertyChanged("ErrorCollection");
+                return result;
+            }
+        }
     }
 }

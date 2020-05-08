@@ -1,12 +1,73 @@
 ﻿using System;
+using System.Linq;
 
 namespace WindowSettings.Validation
 {
     public class WindowSettingsValidator
     {
+        public static string ValidateInput(string inputName, string name, string minimum, string maximum, string digits, string start, bool isDecimalValue)
+        {
+            string result = null;
+            switch (inputName)
+            {
+                case "Name":
+                    if (string.IsNullOrWhiteSpace(name))
+                    {
+                        result = "Custom Name can't be empty";
+                    }
+                    break;
+
+                case "Minimum":
+                    if (string.IsNullOrWhiteSpace(minimum))
+                    {
+                        result = "Minimum can't be empty";
+                    }
+                    else if (Convert.ToDecimal(minimum) > Convert.ToDecimal(maximum))
+                    {
+                        result = "Minium value can't exceed Maximum value.";
+                    }
+                    break;
+
+                case "Maximum":
+                    if (string.IsNullOrWhiteSpace(maximum))
+                    {
+                        result = "Maximum can't be empty";
+                    }
+                    else if (Convert.ToDecimal(minimum) > Convert.ToDecimal(maximum))
+                    {
+                        result = "Maximum value can't be smaller than Minium value.";
+                    }
+                    break;
+
+                case "Start":
+                    if (string.IsNullOrWhiteSpace(start))
+                    {
+                        result = "Value can't be empty.";
+                    }
+                    else if (Convert.ToDecimal(start) < Convert.ToDecimal(minimum) || Convert.ToDecimal(start) > Convert.ToDecimal(maximum))
+                    {
+                        result = "Value can't be outside minimum or maximum.";
+                    }
+                    break;
+
+                case "Digits":
+                    if (isDecimalValue && string.IsNullOrWhiteSpace(digits))
+                    {
+                        result = "Digits can't be empty";
+                    }
+                    else if (!digits.All(char.IsDigit))
+                    {
+                        result = "Fraction value is not allowed.";
+                    }
+                    break;
+            }
+
+            return result;
+        }
+
         public static string ValidateWindowValue(string _start, string _digits)
         {
-            if (!string.IsNullOrEmpty(_start))
+            if (!string.IsNullOrWhiteSpace(_start))
             {
                 var startValue = Convert.ToDecimal(_start);
                 if (!string.IsNullOrEmpty(_digits) && Convert.ToInt32(_digits) <= 16 && startValue >= 0)
