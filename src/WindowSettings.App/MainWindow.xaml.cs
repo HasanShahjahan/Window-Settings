@@ -24,7 +24,7 @@ namespace WindowSettings.App
         public MainWindow()
         {
             InitializeComponent();
-            var model = new MainViewModel("Hasan","2","2.00","1","1.50","2",true,"Q");
+            var model = new MainViewModel("Md Shahjahan Miah","2","2.00","1","1.50","2",true,"Q");
             DataContext = model;
         }
 

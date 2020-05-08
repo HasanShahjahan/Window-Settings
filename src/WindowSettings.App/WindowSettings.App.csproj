@@ -11,8 +11,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WindowSettings.Business\WindowSettings.Business.csproj" />
     <ProjectReference Include="..\WindowSettings.Common\WindowSettings.Common.csproj" />
     <ProjectReference Include="..\WindowSettings.Validation\WindowSettings.Validation.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Themes\" />
   </ItemGroup>
 
 </Project>

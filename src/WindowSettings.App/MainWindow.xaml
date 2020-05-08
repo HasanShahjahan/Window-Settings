@@ -16,15 +16,15 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
-        <!--<Border Grid.Row="1"
+        <Border Grid.Row="1"
                 Grid.Column="0"
                 Background="#7B1FA2"
                 Height="1"
                 Margin="8"
                 HorizontalAlignment="Stretch"
-                VerticalAlignment="Center"/>-->
+                VerticalAlignment="Center"/>
 
-        <!--<local:RangeSlider Grid.Row="1" 
+        <local:RangeSlider Grid.Row="1" 
                            Grid.Column="0" 
                            Orientation="Horizontal" 
                            Height="25"
@@ -32,7 +32,7 @@
                            Maximum="{Binding Maximum, UpdateSourceTrigger = PropertyChanged}"
                            Minimum="{Binding Minimum, UpdateSourceTrigger = PropertyChanged}"
                            Start="{Binding Start, UpdateSourceTrigger = PropertyChanged}"
-                           End="{Binding End, UpdateSourceTrigger = PropertyChanged}"/>-->
+                           End="{Binding End, UpdateSourceTrigger = PropertyChanged}"/>
 
 
         <materialDesign:DialogHost BorderBrush="{DynamicResource MaterialDesignDivider}">

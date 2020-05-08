@@ -1,0 +1,83 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:WindowSettings.App">
+    <Style TargetType="Thumb" x:Key="RangeSliderThumbStyle">
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border Name="OutBox"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}"
+                            Width="16"
+                            Height="{TemplateBinding Height}"
+                            Margin="-8,0">
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="OutBox" Property="Background" Value="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"/>
+                            <Setter TargetName="OutBox" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.HotTrackBrushKey}}"/>
+                        </Trigger>
+                        <DataTrigger Binding="{Binding Orientation, RelativeSource={RelativeSource AncestorType=local:RangeSlider}}" Value="Vertical">
+                            <Setter TargetName="OutBox" Property="Width" Value="Auto"/>
+                            <Setter TargetName="OutBox" Property="Height" Value="16"/>
+                            <Setter TargetName="OutBox" Property="Margin" Value="0,-8"/>
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <ControlTemplate TargetType="local:RangeSlider" x:Key="RangeSliderHorizontalTemplate">
+        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                Background="{TemplateBinding Background}" 
+                Width="{TemplateBinding Width}"
+                Height="{TemplateBinding Height}"
+                Padding="{TemplateBinding Padding}"
+                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+            <Grid Name="PART_SliderContainer" Background="Transparent">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" 
+                        Name="PART_StartArea"
+                        IsHitTestVisible="False"/>
+
+                <Border Grid.Column="2"
+                        Name="PART_EndArea"
+                        IsHitTestVisible="False"/>
+
+                <Thumb Name="PART_StartThumb"
+                       Grid.Column="0"
+                       HorizontalAlignment="Right"
+                       Style="{TemplateBinding StartThumbStyle}"
+                       ToolTip="{TemplateBinding StartThumbToolTip}"/>
+            </Grid>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsReadOnly" Value="True">
+                <Setter TargetName="PART_StartThumb" Property="IsEnabled" Value="False"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    
+    <Style TargetType="{x:Type local:RangeSlider}">
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="StartThumbStyle" Value="{StaticResource RangeSliderThumbStyle}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Template" Value="{StaticResource RangeSliderHorizontalTemplate}"/>
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Vertical">
+                <Setter Property="Template" Value="{StaticResource RangeSliderVertialTemplate}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>
