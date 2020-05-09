@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Windows.Documents;
 using System.Windows.Input;
 using WindowSettings.Common.Command;
 using WindowSettings.Common.Enums;
@@ -108,17 +109,17 @@ namespace WindowSettings.App.ViewModels
 
                 if (RoundingType.Integer == value)
                 {
-                    if (!string.IsNullOrEmpty(_minimum))
+                    if (!string.IsNullOrEmpty(_minimum) && (int.TryParse(_minimum, out int _) || double.TryParse(_minimum, out double _)))
                     {
                         int minimum = (int)Math.Round(Convert.ToDecimal(_minimum));
                         Minimum = Convert.ToString(minimum);
                     }
-                    if (!string.IsNullOrEmpty(_start))
+                    if (!string.IsNullOrEmpty(_start) && (int.TryParse(_start, out int _) || double.TryParse(_start, out double _)))
                     {
                         int start = (int)Math.Round(Convert.ToDecimal(_start));
                         Start = Convert.ToString(start);
                     }
-                    if (!string.IsNullOrEmpty(_maximum))
+                    if (!string.IsNullOrEmpty(_maximum) && (int.TryParse(_maximum, out int _) || double.TryParse(_maximum, out double _)))
                     {
                         int maximum = (int)Math.Round(Convert.ToDecimal(_maximum));
                         Maximum = Convert.ToString(maximum);
@@ -126,17 +127,17 @@ namespace WindowSettings.App.ViewModels
                 }
                 else 
                 {
-                    if (!string.IsNullOrEmpty(_minimum) && !string.IsNullOrEmpty(_digits))
+                    if (!string.IsNullOrEmpty(_minimum) && !string.IsNullOrEmpty(_digits) && double.TryParse(_minimum, out double _))
                     {
                         double minimum = Math.Round(Convert.ToDouble(_minimum), Convert.ToInt32(_digits), MidpointRounding.ToEven);
                         Minimum = Convert.ToString(minimum);
                     }
-                    if (!string.IsNullOrEmpty(_start) && !string.IsNullOrEmpty(_digits))
+                    if (!string.IsNullOrEmpty(_start) && !string.IsNullOrEmpty(_digits) && double.TryParse(_start, out double _))
                     {
                         double start = Math.Round(Convert.ToDouble(_start), Convert.ToInt32(_digits), MidpointRounding.ToEven);
                         Start = Convert.ToString(start);
                     }
-                    if (!string.IsNullOrEmpty(_maximum) && !string.IsNullOrEmpty(_digits))
+                    if (!string.IsNullOrEmpty(_maximum) && !string.IsNullOrEmpty(_digits) && double.TryParse(_maximum, out double _))
                     {
                         double maximum = Math.Round(Convert.ToDouble(_maximum), Convert.ToInt32(_digits), MidpointRounding.ToEven);
                         Maximum = Convert.ToString(maximum);
@@ -177,11 +178,6 @@ namespace WindowSettings.App.ViewModels
         {
             MyCommandValue = (string)parameter;
             if (MyCommandValue == RoundingType.Integer) _isDecimalValue = false;
-            //if (MyCommandValue == RoundingType.Integer && string.IsNullOrEmpty(_digits)) 
-            //{
-            //    _isDecimalValue = false;
-            //    Digits = "2";
-            //} 
             else _isDecimalValue = true;
             OnPropertyChanged("IsDecimalValue");
         }
