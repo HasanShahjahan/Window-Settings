@@ -79,7 +79,7 @@ namespace WindowSettings.Utilities {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} value is not allowed..
+        ///   Looks up a localized string similar to Only numeric value is allowed..
         /// </summary>
         public static string IsNotAllowed {
             get {

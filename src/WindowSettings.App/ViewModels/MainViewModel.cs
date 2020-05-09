@@ -47,7 +47,7 @@ namespace WindowSettings.App.ViewModels
             set
             {
                 _digits = value;
-                //(Maximum, Minimum, Start) = WindowSettingsValidator.ValidateWindowDigits(value, _maximum, _minimum, _start);
+                (Maximum, Minimum, Start) = _inputValidator.ValidateWindowDigits(value, _maximum, _minimum, _start, _isDecimalValue);
                 OnPropertyChanged("Digits");
             }
         }
@@ -176,11 +176,12 @@ namespace WindowSettings.App.ViewModels
         private void ExecuteMethod(object parameter)
         {
             MyCommandValue = (string)parameter;
-            if (MyCommandValue == RoundingType.Integer && string.IsNullOrEmpty(_digits)) 
-            {
-                _isDecimalValue = false;
-                Digits = "2";
-            } 
+            if (MyCommandValue == RoundingType.Integer) _isDecimalValue = false;
+            //if (MyCommandValue == RoundingType.Integer && string.IsNullOrEmpty(_digits)) 
+            //{
+            //    _isDecimalValue = false;
+            //    Digits = "2";
+            //} 
             else _isDecimalValue = true;
             OnPropertyChanged("IsDecimalValue");
         }
