@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Input;
 using WindowSettings.Common.Command;
+using WindowSettings.Common.Enums;
 using WindowSettings.Common.Event;
 using WindowSettings.Validation;
 
@@ -24,10 +26,13 @@ namespace WindowSettings.App.ViewModels
         private bool _isDecimalValue;
 
         private string _myCommandValue;
+
         public ICommand MyCommand { get; set; }
+
         public string Error { get { return null; } }
 
         public Dictionary<string, string> ErrorCollection { get; private set; } = new Dictionary<string, string>();
+        
         private readonly IInputValidator _inputValidator;
 
         public string Name
@@ -50,7 +55,12 @@ namespace WindowSettings.App.ViewModels
         public string Maximum
         {
             get { return _maximum; }
-            set { _maximum = value; OnPropertyChanged("Maximum"); OnPropertyChanged("End"); }
+            set 
+            { 
+                _maximum = value; 
+                OnPropertyChanged("Maximum"); 
+                OnPropertyChanged("End"); 
+            }
         }
 
         public string Minimum
@@ -68,7 +78,7 @@ namespace WindowSettings.App.ViewModels
             get { return _start; }
             set
             {
-                _start = _inputValidator.ValidateWindowValue(value, _digits);
+                _start = _inputValidator.ValidateWindowValue(value, _digits, _isDecimalValue);
                 OnPropertyChanged("Start");
             }
         }
@@ -95,10 +105,42 @@ namespace WindowSettings.App.ViewModels
             set
             {
                 _myCommandValue = value;
-                if (!string.IsNullOrEmpty(_myCommandValue))
+
+                if (RoundingType.Integer == value)
                 {
-                    if (_myCommandValue == "Z") _isDecimalValue = false;
-                    else _isDecimalValue = true;
+                    if (!string.IsNullOrEmpty(_minimum))
+                    {
+                        int minimum = (int)Math.Round(Convert.ToDecimal(_minimum));
+                        Minimum = Convert.ToString(minimum);
+                    }
+                    if (!string.IsNullOrEmpty(_start))
+                    {
+                        int start = (int)Math.Round(Convert.ToDecimal(_start));
+                        Start = Convert.ToString(start);
+                    }
+                    if (!string.IsNullOrEmpty(_maximum))
+                    {
+                        int maximum = (int)Math.Round(Convert.ToDecimal(_maximum));
+                        Maximum = Convert.ToString(maximum);
+                    }
+                }
+                else 
+                {
+                    if (!string.IsNullOrEmpty(_minimum) && !string.IsNullOrEmpty(_digits))
+                    {
+                        double minimum = Math.Round(Convert.ToDouble(_minimum), Convert.ToInt32(_digits), MidpointRounding.ToEven);
+                        Minimum = Convert.ToString(minimum);
+                    }
+                    if (!string.IsNullOrEmpty(_start) && !string.IsNullOrEmpty(_digits))
+                    {
+                        double start = Math.Round(Convert.ToDouble(_start), Convert.ToInt32(_digits), MidpointRounding.ToEven);
+                        Start = Convert.ToString(start);
+                    }
+                    if (!string.IsNullOrEmpty(_maximum) && !string.IsNullOrEmpty(_digits))
+                    {
+                        double maximum = Math.Round(Convert.ToDouble(_maximum), Convert.ToInt32(_digits), MidpointRounding.ToEven);
+                        Maximum = Convert.ToString(maximum);
+                    }
                 }
                 OnPropertyChanged("MyCommandValue");
             }
@@ -134,7 +176,11 @@ namespace WindowSettings.App.ViewModels
         private void ExecuteMethod(object parameter)
         {
             MyCommandValue = (string)parameter;
-            if (MyCommandValue == "Z") _isDecimalValue = false;
+            if (MyCommandValue == RoundingType.Integer && string.IsNullOrEmpty(_digits)) 
+            {
+                _isDecimalValue = false;
+                Digits = "2";
+            } 
             else _isDecimalValue = true;
             OnPropertyChanged("IsDecimalValue");
         }

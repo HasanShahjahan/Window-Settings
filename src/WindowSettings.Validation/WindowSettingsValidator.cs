@@ -23,6 +23,10 @@ namespace WindowSettings.Validation
                     {
                         result = string.Format(ResourceFile.CanNotBeEmpty, "Minimum");
                     }
+                    else if (string.IsNullOrWhiteSpace(maximum))
+                    {
+                        break;
+                    }
                     else if (Convert.ToDecimal(minimum) > Convert.ToDecimal(maximum))
                     {
                         result = string.Format(ResourceFile.CanNotExceed, "Minimum", "Maximum");
@@ -34,6 +38,10 @@ namespace WindowSettings.Validation
                     {
                         result = string.Format(ResourceFile.CanNotBeEmpty, "Maximum");
                     }
+                    else if (string.IsNullOrWhiteSpace(minimum))
+                    {
+                        break;
+                    }
                     else if (Convert.ToDecimal(minimum) > Convert.ToDecimal(maximum))
                     {
                         result = string.Format(ResourceFile.ValueCanNotBeSmallerThan, "Maximum", "Minimum");
@@ -44,6 +52,14 @@ namespace WindowSettings.Validation
                     if (string.IsNullOrWhiteSpace(start))
                     {
                         result = string.Format(ResourceFile.CanNotBeEmpty, "Value");
+                    }
+                    else if (string.IsNullOrWhiteSpace(minimum))
+                    {
+                        break;
+                    }
+                    else if (string.IsNullOrWhiteSpace(maximum))
+                    {
+                        break;
                     }
                     else if (Convert.ToDecimal(start) < Convert.ToDecimal(minimum) || Convert.ToDecimal(start) > Convert.ToDecimal(maximum))
                     {
@@ -62,19 +78,27 @@ namespace WindowSettings.Validation
                     }
                     break;
             }
-
             return result;
         }
 
-        public string ValidateWindowValue(string _start, string _digits)
+        public string ValidateWindowValue(string _start, string _digits, bool isDecimal)
         {
             if (!string.IsNullOrWhiteSpace(_start))
             {
-                var startValue = Convert.ToDecimal(_start);
-                if (!string.IsNullOrEmpty(_digits) && Convert.ToInt32(_digits) <= 16 && startValue >= 0)
+                if (isDecimal)
                 {
-                    _start = Convert.ToString(Math.Round(Convert.ToDecimal(_start), Convert.ToInt32(_digits)));
+                    var startValue = Convert.ToDecimal(_start);
+                    if (!string.IsNullOrEmpty(_digits) && Convert.ToInt32(_digits) <= 16 && startValue >= 0)
+                    {
+                        _start = Convert.ToString(Math.Round(Convert.ToDecimal(_start), Convert.ToInt32(_digits)));
+                    }
                 }
+                else
+                {
+                    int start = (int)Math.Round(Convert.ToDecimal(_start));
+                    _start = Convert.ToString(start);
+                }
+                
             }
             return _start;
         }

@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using WindowSettings.App.ViewModels;
+using WindowSettings.Common.Enums;
 using WindowSettings.Validation;
 
 namespace WindowSettings.App
@@ -15,7 +16,7 @@ namespace WindowSettings.App
         {
             _inputValidator = inputValidator;
             InitializeComponent();
-            var model = new MainViewModel("Md Shahjahan Miah","2","2.00","1","1.50","2",true,"Q", _inputValidator);
+            var model = new MainViewModel("Md Shahjahan Miah", "2", "7.89", "1.45", "3.50", "7.89", true, RoundingType.Double, _inputValidator);
             DataContext = model;
         }
 
