@@ -44,7 +44,7 @@ namespace WindowSettings.UnitTest
         {
             var validator = new WindowSettingsValidator();
             var result = validator.ValidateInput("Digits", string.Empty, string.Empty, string.Empty, "2.15", string.Empty, true);
-            Assert.Equal(string.Format(ResourceFile.IsNotAllowed, "Fraction"), result);
+            Assert.Equal(string.Format(ResourceFile.IsNotAllowed), result);
         }
     }
 }

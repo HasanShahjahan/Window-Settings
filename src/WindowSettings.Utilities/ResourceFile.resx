@@ -126,7 +126,7 @@
     <comment>{0} indicates first fied, {1} indicates second field</comment>
   </data>
   <data name="IsNotAllowed" xml:space="preserve">
-    <value>{0} value is not allowed.</value>
+    <value>Only numeric value is allowed.</value>
     <comment>{0} indicates first field</comment>
   </data>
   <data name="ValueCanNotBeOutside" xml:space="preserve">
