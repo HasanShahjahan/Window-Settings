@@ -19,7 +19,7 @@
 
         <Border Grid.Row="1"
                 Grid.Column="0"
-                Background="#7B1FA2"
+                Background="Blue"
                 Height="1"
                 Margin="8"
                 HorizontalAlignment="Stretch"
@@ -38,7 +38,7 @@
 
         <materialDesign:DialogHost BorderBrush="{DynamicResource MaterialDesignDivider}">
             <materialDesign:DialogHost.DialogContent>
-                <Grid Width="500" Height="400" HorizontalAlignment="Center">
+                <Grid Width="500" Height="410" HorizontalAlignment="Center">
                     <StackPanel Orientation="Vertical" Margin="30">
                         <TextBox materialDesign:HintAssist.Hint="Custom names..." Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" Width="200" Text="{Binding Name, ValidatesOnDataErrors=True, UpdateSourceTrigger = PropertyChanged}" ToolTip="{Binding ErrorCollection[Name]}"/>
                         <RadioButton Width="150" Content="Z" Command="{Binding Path=MyCommand}" Name="Integer" CommandParameter="{Binding ElementName=Integer, Path=Content}" Margin="10"></RadioButton>

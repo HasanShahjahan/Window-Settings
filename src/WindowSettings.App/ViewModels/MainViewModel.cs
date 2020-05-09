@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows.Input;
 using WindowSettings.Common.Command;
 using WindowSettings.Common.Event;
@@ -30,6 +28,7 @@ namespace WindowSettings.App.ViewModels
         public string Error { get { return null; } }
 
         public Dictionary<string, string> ErrorCollection { get; private set; } = new Dictionary<string, string>();
+        private readonly IInputValidator _inputValidator;
 
         public string Name
         {
@@ -69,7 +68,7 @@ namespace WindowSettings.App.ViewModels
             get { return _start; }
             set
             {
-                _start = WindowSettingsValidator.ValidateWindowValue(value, _digits);
+                _start = _inputValidator.ValidateWindowValue(value, _digits);
                 OnPropertyChanged("Start");
             }
         }
@@ -100,14 +99,13 @@ namespace WindowSettings.App.ViewModels
                 {
                     if (_myCommandValue == "Z") _isDecimalValue = false;
                     else _isDecimalValue = true;
-                    Name = "Z";
                 }
                 OnPropertyChanged("MyCommandValue");
             }
 
         }
 
-        public MainViewModel(string name, string digits, string maximum, string minimum, string start, string end, bool isDecimalValue, string myCommandValue)
+        public MainViewModel(string name, string digits, string maximum, string minimum, string start, string end, bool isDecimalValue, string myCommandValue, IInputValidator inputValidator)
         {
             _name = name;
             _digits = digits;
@@ -118,6 +116,7 @@ namespace WindowSettings.App.ViewModels
             _isDecimalValue = isDecimalValue;
             _myCommandValue = myCommandValue;
             MyCommand = new RelayCommand(ExecuteMethod, CanExecuteMethod);
+            _inputValidator = inputValidator;
         }
 
         private bool CanExecuteMethod(object parameter)
@@ -144,7 +143,7 @@ namespace WindowSettings.App.ViewModels
         {
             get
             {
-                string result = WindowSettingsValidator.ValidateInput(name, Name, Minimum, Maximum, Digits, Start, IsDecimalValue);
+                string result = _inputValidator.ValidateInput(name, Name, Minimum, Maximum, Digits, Start, IsDecimalValue);
                 if (ErrorCollection.ContainsKey(name)) ErrorCollection[name] = result;
                 else if (result != null) ErrorCollection.Add(name, result);
                 OnPropertyChanged("ErrorCollection");

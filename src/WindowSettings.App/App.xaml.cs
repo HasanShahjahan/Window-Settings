@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using System;
 using System.Windows;
+using WindowSettings.App.ViewModels;
+using WindowSettings.Business.Interfaces;
+using WindowSettings.Business.Managers;
+using WindowSettings.Validation;
 
 namespace WindowSettings.App
 {
@@ -13,5 +15,49 @@ namespace WindowSettings.App
     /// </summary>
     public partial class App : Application
     {
+        private readonly IHost host;
+        public static IServiceProvider ServiceProvider { get; private set; }
+
+        public App()
+        {
+            host = Host.CreateDefaultBuilder().ConfigureAppConfiguration((context, builder) =>
+                    {
+                        builder.AddJsonFile("appsettings.json", optional: true);
+                    }).ConfigureServices((context, services) =>
+                    {
+                        ConfigureServices(context.Configuration, services);
+                    })
+                    .ConfigureLogging(logging =>
+                    {
+                        
+                    })
+                    .Build();
+
+            ServiceProvider = host.Services;
+        }
+
+        private void ConfigureServices(IConfiguration configuration, IServiceCollection services)
+        {
+            services.AddSingleton<MainViewModel>();
+            services.AddTransient<MainWindow>();
+            services.AddTransient<IInputValidator, WindowSettingsValidator>();
+            
+        }
+
+        //Startup Event
+        protected override async void OnStartup(StartupEventArgs e)
+        {
+            await host.StartAsync();
+            var window = ServiceProvider.GetRequiredService<MainWindow>();
+            window.Show();
+            base.OnStartup(e);
+        }
+
+        //Exit Event
+        protected override async void OnExit(ExitEventArgs e)
+        {
+            using (host) await host.StopAsync(TimeSpan.FromSeconds(5));
+            base.OnExit(e);
+        }
     }
 }

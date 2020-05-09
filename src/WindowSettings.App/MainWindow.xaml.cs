@@ -1,18 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows;
 using WindowSettings.App.ViewModels;
+using WindowSettings.Validation;
 
 namespace WindowSettings.App
 {
@@ -21,10 +9,13 @@ namespace WindowSettings.App
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private readonly IInputValidator _inputValidator;
+
+        public MainWindow(IInputValidator inputValidator)
         {
+            _inputValidator = inputValidator;
             InitializeComponent();
-            var model = new MainViewModel("Md Shahjahan Miah","2","2.00","1","1.50","2",true,"Q");
+            var model = new MainViewModel("Md Shahjahan Miah","2","2.00","1","1.50","2",true,"Q", _inputValidator);
             DataContext = model;
         }
 

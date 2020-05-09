@@ -3,9 +3,9 @@ using System.Linq;
 
 namespace WindowSettings.Validation
 {
-    public class WindowSettingsValidator
+    public class WindowSettingsValidator : IInputValidator
     {
-        public static string ValidateInput(string inputName, string name, string minimum, string maximum, string digits, string start, bool isDecimalValue)
+        public string ValidateInput(string inputName, string name, string minimum, string maximum, string digits, string start, bool isDecimalValue)
         {
             string result = null;
             switch (inputName)
@@ -65,7 +65,7 @@ namespace WindowSettings.Validation
             return result;
         }
 
-        public static string ValidateWindowValue(string _start, string _digits)
+        public string ValidateWindowValue(string _start, string _digits)
         {
             if (!string.IsNullOrWhiteSpace(_start))
             {
@@ -78,7 +78,7 @@ namespace WindowSettings.Validation
             return _start;
         }
 
-        public static (string Maximum, string Minimum, string Start) ValidateWindowDigits(string _digits, string _maximum, string _minimum, string _start)
+        public (string Maximum, string Minimum, string Start) ValidateWindowDigits(string _digits, string _maximum, string _minimum, string _start)
         {
             string Maximum = string.Empty; string Minimum = string.Empty; string Start = string.Empty;
             if (!string.IsNullOrEmpty(_digits) && Convert.ToInt32(_digits) <= 16)
