@@ -1,4 +1,4 @@
-# WindowSettings
+# Window Settings
 Settings Window using WPF MVVM Pattern on .Net Core 3.1
 
 • The numeric range of the slider can be set by 2 number input fields (minimum and maximum).
