@@ -35,7 +35,7 @@ namespace WindowSettings.Common.Enums
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
+            if (obj is null) return false;
             if (ReferenceEquals(this, obj)) return true;
             return obj.GetType() == GetType() && Equals((StringEnum)obj);
         }
@@ -56,7 +56,7 @@ namespace WindowSettings.Common.Enums
 
         public override int GetHashCode()
         {
-            return (Value != null ? Value.GetHashCode() : 0);
+            return HashCode.Combine(Value);
         }
 
         public override string ToString()

@@ -5,9 +5,8 @@ namespace WindowSettings.Common.Command
 {
     public class RelayCommand : ICommand
     {
-
-        Action<object> _executemethod;
-        Func<object, bool> _canexecutemethod;
+        readonly Action<object> _executemethod;
+        readonly Func<object, bool> _canexecutemethod;
 
         public RelayCommand(Action<object> executemethod, Func<object, bool> canexecutemethod)
         {

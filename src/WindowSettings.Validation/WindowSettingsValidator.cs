@@ -24,14 +24,14 @@ namespace WindowSettings.Validation
                     {
                         result = string.Format(ResourceFile.CanNotBeEmpty, "Minimum");
                     }
-                    else if (string.IsNullOrWhiteSpace(maximum))
-                    {
-                        break;
-                    }
                     else if (!ValidNumber(minimum, isDecimalValue))
                     {
                         var value = isDecimalValue ? "Double" : "Integer";
                         result = "Given input should be " + value + ".";
+                    }
+                    else if (string.IsNullOrWhiteSpace(maximum) || !ValidNumber(maximum, isDecimalValue))
+                    {
+                        break;
                     }
                     else if (Convert.ToDecimal(minimum) > Convert.ToDecimal(maximum))
                     {
@@ -44,15 +44,16 @@ namespace WindowSettings.Validation
                     {
                         result = string.Format(ResourceFile.CanNotBeEmpty, "Maximum");
                     }
-                    else if (string.IsNullOrWhiteSpace(minimum))
-                    {
-                        break;
-                    }
                     else if (!ValidNumber(maximum, isDecimalValue))
                     {
                         var value = isDecimalValue ? "Double" : "Integer";
                         result = "Given input should be " + value + ".";
                     }
+                    else if (string.IsNullOrWhiteSpace(minimum) || !ValidNumber(minimum, isDecimalValue))
+                    {
+                        break;
+                    }
+                    
                     else if (Convert.ToDecimal(minimum) > Convert.ToDecimal(maximum))
                     {
                         result = string.Format(ResourceFile.ValueCanNotBeSmallerThan, "Maximum", "Minimum");
@@ -64,18 +65,18 @@ namespace WindowSettings.Validation
                     {
                         result = string.Format(ResourceFile.CanNotBeEmpty, "Value");
                     }
-                    else if (string.IsNullOrWhiteSpace(minimum))
-                    {
-                        break;
-                    }
-                    else if (string.IsNullOrWhiteSpace(maximum))
-                    {
-                        break;
-                    }
                     else if (!ValidNumber(start, isDecimalValue))
                     {
                         var value = isDecimalValue ? "Double" : "Integer";
                         result = "Given input should be " + value + ".";
+                    }
+                    else if (string.IsNullOrWhiteSpace(minimum) || !ValidNumber(minimum, isDecimalValue))
+                    {
+                        break;
+                    }
+                    else if (string.IsNullOrWhiteSpace(maximum) || !ValidNumber(maximum, isDecimalValue))
+                    {
+                        break;
                     }
                     else if (Convert.ToDecimal(start) < Convert.ToDecimal(minimum) || Convert.ToDecimal(start) > Convert.ToDecimal(maximum))
                     {
@@ -134,17 +135,17 @@ namespace WindowSettings.Validation
 
             if (!isDecimalValue)
             {
-                if (!string.IsNullOrEmpty(_minimum))
+                if (!string.IsNullOrEmpty(_minimum) && int.TryParse(_minimum, out int _))
                 {
                     int minimum = (int)Math.Round(Convert.ToDecimal(_minimum));
                     Minimum = Convert.ToString(minimum);
                 }
-                if (!string.IsNullOrEmpty(_start))
+                if (!string.IsNullOrEmpty(_start) && int.TryParse(_start, out int _))
                 {
                     int start = (int)Math.Round(Convert.ToDecimal(_start));
                     Start = Convert.ToString(start);
                 }
-                if (!string.IsNullOrEmpty(_maximum))
+                if (!string.IsNullOrEmpty(_maximum) && int.TryParse(_maximum, out int _))
                 {
                     int maximum = (int)Math.Round(Convert.ToDecimal(_maximum));
                     Maximum = Convert.ToString(maximum);
@@ -152,17 +153,17 @@ namespace WindowSettings.Validation
             }
             else
             {
-                if (!string.IsNullOrEmpty(_minimum) && !string.IsNullOrEmpty(_digits))
+                if (!string.IsNullOrEmpty(_minimum) && !string.IsNullOrEmpty(_digits) && double.TryParse(_minimum, out double _))
                 {
                     double minimum = Math.Round(Convert.ToDouble(_minimum), Convert.ToInt32(_digits), MidpointRounding.ToEven);
                     Minimum = Convert.ToString(minimum);
                 }
-                if (!string.IsNullOrEmpty(_start) && !string.IsNullOrEmpty(_digits))
+                if (!string.IsNullOrEmpty(_start) && !string.IsNullOrEmpty(_digits) && double.TryParse(_start, out double _))
                 {
                     double start = Math.Round(Convert.ToDouble(_start), Convert.ToInt32(_digits), MidpointRounding.ToEven);
                     Start = Convert.ToString(start);
                 }
-                if (!string.IsNullOrEmpty(_maximum) && !string.IsNullOrEmpty(_digits))
+                if (!string.IsNullOrEmpty(_maximum) && !string.IsNullOrEmpty(_digits) && double.TryParse(_maximum, out double _))
                 {
                     double maximum = Math.Round(Convert.ToDouble(_maximum), Convert.ToInt32(_digits), MidpointRounding.ToEven);
                     Maximum = Convert.ToString(maximum);
