@@ -14,6 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\WindowSettings.Business\WindowSettings.Business.csproj" />
+    <ProjectReference Include="..\..\src\WindowSettings.Common\WindowSettings.Common.csproj" />
     <ProjectReference Include="..\..\src\WindowSettings.Validation\WindowSettings.Validation.csproj" />
   </ItemGroup>
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using WindowSettings.Utilities;
 
 namespace WindowSettings.Validation
 {
@@ -13,51 +14,51 @@ namespace WindowSettings.Validation
                 case "Name":
                     if (string.IsNullOrWhiteSpace(name))
                     {
-                        result = "Custom Name can't be empty";
+                        result = string.Format(ResourceFile.CanNotBeEmpty, "Custom Name");
                     }
                     break;
 
                 case "Minimum":
                     if (string.IsNullOrWhiteSpace(minimum))
                     {
-                        result = "Minimum can't be empty";
+                        result = string.Format(ResourceFile.CanNotBeEmpty, "Minimum");
                     }
                     else if (Convert.ToDecimal(minimum) > Convert.ToDecimal(maximum))
                     {
-                        result = "Minium value can't exceed Maximum value.";
+                        result = string.Format(ResourceFile.CanNotExceed, "Minimum", "Maximum");
                     }
                     break;
 
                 case "Maximum":
                     if (string.IsNullOrWhiteSpace(maximum))
                     {
-                        result = "Maximum can't be empty";
+                        result = string.Format(ResourceFile.CanNotBeEmpty, "Maximum");
                     }
                     else if (Convert.ToDecimal(minimum) > Convert.ToDecimal(maximum))
                     {
-                        result = "Maximum value can't be smaller than Minimum value.";
+                        result = string.Format(ResourceFile.ValueCanNotBeSmallerThan, "Maximum", "Minimum");
                     }
                     break;
 
                 case "Start":
                     if (string.IsNullOrWhiteSpace(start))
                     {
-                        result = "Value can't be empty.";
+                        result = string.Format(ResourceFile.CanNotBeEmpty, "Value");
                     }
                     else if (Convert.ToDecimal(start) < Convert.ToDecimal(minimum) || Convert.ToDecimal(start) > Convert.ToDecimal(maximum))
                     {
-                        result = "Value can't be outside minimum or maximum.";
+                        result = string.Format(ResourceFile.ValueCanNotBeOutside, "Minimum", "Maximum");
                     }
                     break;
 
                 case "Digits":
                     if (isDecimalValue && string.IsNullOrWhiteSpace(digits))
                     {
-                        result = "Digits can't be empty";
+                        result = string.Format(ResourceFile.CanNotBeEmpty, "Digits");
                     }
                     else if (!digits.All(char.IsDigit))
                     {
-                        result = "Fraction value is not allowed.";
+                        result = string.Format(ResourceFile.IsNotAllowed,"Fraction");
                     }
                     break;
             }

@@ -1,4 +1,5 @@
 using System;
+using WindowSettings.Utilities;
 using WindowSettings.Validation;
 using Xunit;
 
@@ -11,7 +12,7 @@ namespace WindowSettings.UnitTest
         {
             var validator = new WindowSettingsValidator();
             var result = validator.ValidateInput("Name", string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, true);
-            Assert.Equal("Custom Name can't be empty", result);
+            Assert.Equal(string.Format(ResourceFile.CanNotBeEmpty,"Custom Name"), result);
         }
 
         [Fact]
@@ -19,7 +20,7 @@ namespace WindowSettings.UnitTest
         {
             var validator = new WindowSettingsValidator();
             var result = validator.ValidateInput("Start", string.Empty, "1", "2", string.Empty, "3", true);
-            Assert.Equal("Value can't be outside minimum or maximum.", result);
+            Assert.Equal(string.Format(ResourceFile.ValueCanNotBeOutside, "Minimum", "Maximum"), result);
         }
 
         [Fact]
@@ -27,7 +28,7 @@ namespace WindowSettings.UnitTest
         {
             var validator = new WindowSettingsValidator();
             var result = validator.ValidateInput("Minimum", string.Empty, "5", "4", string.Empty, string.Empty, true);
-            Assert.Equal("Minium value can't exceed Maximum value.", result);
+            Assert.Equal(string.Format(ResourceFile.CanNotExceed, "Minimum", "Maximum"), result);
         }
 
         [Fact]
@@ -35,7 +36,15 @@ namespace WindowSettings.UnitTest
         {
             var validator = new WindowSettingsValidator();
             var result = validator.ValidateInput("Maximum", string.Empty, "2.15", "0.4", string.Empty, string.Empty, true);
-            Assert.Equal("Maximum value can't be smaller than Minimum value.", result);
+            Assert.Equal(string.Format(ResourceFile.ValueCanNotBeSmallerThan, "Maximum", "Minimum"), result);
+        }
+
+        [Fact]
+        public void ValidateDigitCanNotFraction()
+        {
+            var validator = new WindowSettingsValidator();
+            var result = validator.ValidateInput("Digits", string.Empty, string.Empty, string.Empty, "2.15", string.Empty, true);
+            Assert.Equal(string.Format(ResourceFile.IsNotAllowed, "Fraction"), result);
         }
     }
 }
