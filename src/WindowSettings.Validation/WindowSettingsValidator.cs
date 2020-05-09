@@ -35,7 +35,7 @@ namespace WindowSettings.Validation
                     }
                     else if (Convert.ToDecimal(minimum) > Convert.ToDecimal(maximum))
                     {
-                        result = "Maximum value can't be smaller than Minium value.";
+                        result = "Maximum value can't be smaller than Minimum value.";
                     }
                     break;
 
