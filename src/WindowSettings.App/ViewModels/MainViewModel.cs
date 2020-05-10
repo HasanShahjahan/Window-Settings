@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Windows.Documents;
 using System.Windows.Input;
 using WindowSettings.Common.Command;
 using WindowSettings.Common.Enums;

@@ -5,4 +5,9 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\WindowSettings.DataAccess\WindowSettings.DataAccess.csproj" />
+    <ProjectReference Include="..\WindowSettings.DataObjects\WindowSettings.DataObjects.csproj" />
+  </ItemGroup>
+
 </Project>

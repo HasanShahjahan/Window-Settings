@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -6,6 +7,8 @@ using System.Windows;
 using WindowSettings.App.ViewModels;
 using WindowSettings.Business.Interfaces;
 using WindowSettings.Business.Managers;
+using WindowSettings.DataAccess.DbContext;
+using WindowSettings.DataAccess.Repositories;
 using WindowSettings.Validation;
 
 namespace WindowSettings.App
@@ -41,7 +44,10 @@ namespace WindowSettings.App
             services.AddSingleton<MainViewModel>();
             services.AddTransient<MainWindow>();
             services.AddTransient<IInputValidator, WindowSettingsValidator>();
-            
+            services.AddTransient<WindowSettingsRepository, WindowSettingsRepository>();
+            services.AddTransient<WindowSettingsManager, WindowSettingsManager>();
+            services.AddDbContext<EliseDbContext>(options => options.UseInMemoryDatabase("EliseDbContext"));
+
         }
 
         //Startup Event
