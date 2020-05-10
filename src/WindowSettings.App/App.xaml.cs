@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -50,6 +51,11 @@ namespace WindowSettings.App
 
         }
 
+        public void Configure(IApplicationBuilder app)
+        {
+            
+            // your logic goes here
+        }
         //Startup Event
         protected override async void OnStartup(StartupEventArgs e)
         {

@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
@@ -14,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\WindowSettings.App\WindowSettings.App.csproj" />
     <ProjectReference Include="..\..\src\WindowSettings.Business\WindowSettings.Business.csproj" />
     <ProjectReference Include="..\..\src\WindowSettings.Common\WindowSettings.Common.csproj" />
     <ProjectReference Include="..\..\src\WindowSettings.Validation\WindowSettings.Validation.csproj" />
