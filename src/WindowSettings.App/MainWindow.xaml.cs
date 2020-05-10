@@ -19,10 +19,5 @@ namespace WindowSettings.App
             var model = new MainViewModel("Md Shahjahan Miah", "2", "7.89", "1.45", "3.50", "7.89", true, RoundingType.Double, _inputValidator);
             DataContext = model;
         }
-
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            e.Cancel = true;
-        }
     }
 }
