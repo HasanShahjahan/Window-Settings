@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WindowSettings.Common\WindowSettings.Common.csproj" />
+    <ProjectReference Include="..\WindowSettings.Entities\WindowSettings.Entities.csproj" />
+  </ItemGroup>
+
+</Project>
