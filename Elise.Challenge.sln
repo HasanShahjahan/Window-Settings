@@ -7,6 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F95231DD-47A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{0A262BFA-E4B0-4DF5-817F-26C3CA4263BF}"
 	ProjectSection(SolutionItems) = preProject
+		docs\CoveredAndPrerequisite.PNG = docs\CoveredAndPrerequisite.PNG
 		docs\Specifications.PNG = docs\Specifications.PNG
 	EndProjectSection
 EndProject
