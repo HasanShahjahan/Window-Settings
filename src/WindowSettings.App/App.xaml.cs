@@ -46,7 +46,7 @@ namespace WindowSettings.App
             services.AddTransient<MainWindow>();
             services.AddTransient<IInputValidator, WindowSettingsValidator>();
             services.AddTransient<WindowSettingsRepository, WindowSettingsRepository>();
-            services.AddTransient<WindowSettingsManager, WindowSettingsManager>();
+            services.AddTransient<IWindowSettingsManager, WindowSettingsManager>();
             services.AddDbContext<EliseDbContext>(options => options.UseInMemoryDatabase("EliseDbContext"));
 
         }

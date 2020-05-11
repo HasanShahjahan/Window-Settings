@@ -1,11 +1,7 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using WindowSettings.App.ViewModels;
-using WindowSettings.Business.Managers;
+using WindowSettings.Business.Interfaces;
 using WindowSettings.Common.Enums;
-using WindowSettings.DataObjects.Model;
 using WindowSettings.Validation;
 
 namespace WindowSettings.App
@@ -16,9 +12,9 @@ namespace WindowSettings.App
     public partial class MainWindow : Window
     {
         private readonly IInputValidator _inputValidator;
-        private readonly WindowSettingsManager _windowSettingsManager;
+        private readonly IWindowSettingsManager _windowSettingsManager;
 
-        public MainWindow(IInputValidator inputValidator, WindowSettingsManager windowSettingsManager)
+        public MainWindow(IInputValidator inputValidator, IWindowSettingsManager windowSettingsManager)
         {
             _inputValidator = inputValidator;
             _windowSettingsManager = windowSettingsManager;
